@@ -163,15 +163,15 @@ T.ctap='Tap the chest to open it|Açmaq üçün sandığa toxun|Açmak için san
 T.nz='Not enough ZBZ|ZBZ çatmır|ZBZ yetersiz|Недостаточно ZBZ|ZBZ 不足|ZBZ غير كافٍ';
 T.nof='No free chest yet: defeat 10 enemies|Pulsuz sandıq yoxdur: 10 düşmən məğlub et|Ücretsiz sandık yok: 10 düşman yen|Бесплатных сундуков нет: победи 10 врагов|暂无免费宝箱：击败10个敌人|لا صندوق مجاني: اهزم 10 أعداء';
 T.net='Connection error|Bağlantı xətası|Bağlantı hatası|Ошибка соединения|连接错误|خطأ في الاتصال';T.pw='You already have a pending request|Gözləyən sorğun var|Bekleyen talebin var|У вас уже есть заявка|你已有待处理申请|لديك طلب قيد الانتظار';T.nj='Join the channel first|Əvvəl kanala qoşul|Önce kanala katıl|Сначала вступи в канал|请先加入频道|انضم إلى القناة أولاً';
-T.paid='Paid|Ödənildi|Ödendi|Оплачено|已支付|تم الدفع';T.rej='Rejected|Rədd edildi|Reddedildi|Отклонено|已拒绝|مرفوض';T.mnt='Maintenance in progress. We will be back soon.|Texniki işlər gedir. Tezliklə qayıdacağıq.|Teknik çalışma var. Yakında döneceğiz.|Технические работы. Скоро вернёмся.|正在维护，稍后恢复。|أعمال صيانة. سنعود قريبًا.';T.blk='Your account is blocked|Hesabın bloklanıb|Hesabın engellendi|Аккаунт заблокирован|账号已被封禁|تم حظر حسابك';T.tgo='Open the game from Telegram|Oyunu Telegram-dan aç|Oyunu Telegram üzerinden aç|Открой игру в Telegram|请在Telegram中打开|افتح اللعبة من تيليجرام';
+T.wt='Wait a few seconds and try again|Bir neçə saniyə gözlə və yenidən yoxla|Birkaç saniye bekle ve tekrar dene|Подожди пару секунд и повтори|请等几秒再试|انتظر بضع ثوانٍ وحاول مجددًا';T.cf='Channel check failed: the bot must be admin there|Kanal yoxlanmadı: bot orada admin olmalıdır|Kanal doğrulanamadı: bot orada yönetici olmalı|Не удалось проверить канал: бот должен быть админом|无法验证频道：机器人需为管理员|تعذر التحقق: يجب أن يكون البوت مشرفًا';T.paid='Paid|Ödənildi|Ödendi|Оплачено|已支付|تم الدفع';T.rej='Rejected|Rədd edildi|Reddedildi|Отклонено|已拒绝|مرفوض';T.mnt='Maintenance in progress. We will be back soon.|Texniki işlər gedir. Tezliklə qayıdacağıq.|Teknik çalışma var. Yakında döneceğiz.|Технические работы. Скоро вернёмся.|正在维护，稍后恢复。|أعمال صيانة. سنعود قريبًا.';T.blk='Your account is blocked|Hesabın bloklanıb|Hesabın engellendi|Аккаунт заблокирован|账号已被封禁|تم حظر حسابك';T.tgo='Open the game from Telegram|Oyunu Telegram-dan aç|Oyunu Telegram üzerinden aç|Открой игру в Telegram|请在Telegram中打开|افتح اللعبة من تيليجرام';
 const LN=['English','Azərbaycan','Türkçe','Русский','中文','العربية'],LC=['en','az','tr','ru','zh','ar'];
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
 let S={b:0,best:0,pts:0,ads:0,day:'',ms:0,g:0,cl:{},lang:1,h:[],fr:0,o:{},ch:0,hy:55,ha:0,z:0,cx:0,kc:0};
-try{const o=JSON.parse(localStorage.getItem('c2k'))||{};['lang','snd','tut','ch'].forEach(k=>{if(o[k]!==undefined)S[k]=o[k]})}catch(e){}
+try{const o=JSON.parse(localStorage.getItem('c2k'))||{};['lang','snd','tut','ch','to'].forEach(k=>{if(o[k]!==undefined)S[k]=o[k]})}catch(e){}
 const td=new Date().toISOString().slice(0,10);
 if(S.day!=td){Object.assign(S,{day:td,ads:0,ms:0,g:0,cl:{},ha:0});S.hy=Math.max(S.hy,55)}
-const sv=()=>{try{localStorage.setItem('c2k',JSON.stringify({lang:S.lang,snd:S.snd,tut:S.tut,ch:S.ch}))}catch(e){}};
-const KT=25000,ZR=.00005,CAPT=8*3600000;S.pt0=Date.now();
+const sv=()=>{try{localStorage.setItem('c2k',JSON.stringify({lang:S.lang,snd:S.snd,tut:S.tut,ch:S.ch,to:S.to}))}catch(e){}};
+const KT=25000,ZR=.00005,CAPT=8*3600000;S.pt0=Date.now();if(!S.to)S.to={};
 const pk=()=>Math.floor(Math.min(Date.now()-S.pt0,CAPT)/KT),pend=()=>pk()*ZR;
 const t=k=>(T[k]||k).split('|')[S.lang];
 let U={name:'Guest',id:0};
@@ -179,17 +179,20 @@ try{const u=JSON.parse(new URLSearchParams(new URLSearchParams(location.hash.sli
 const link=()=>`https://t.me/${BOT}?start=ref_${U.id}`,f3=n=>n.toFixed(3),fp=n=>+(+n).toFixed(1),fz=n=>+(+n).toFixed(5);
 /* ---- server link (added) ---- */
 const SRV='https://coin-api.senannesibov55.workers.dev',SUPER_ID='8197921729';
-let ADM=0,CHN='',LB=[],mvn=0;
+let ADM=0,CHN='',LB=[],CT=[],mvn=0;
 const TGD=(()=>{try{let d=new URLSearchParams(location.hash.slice(1)).get('tgWebAppData');if(!d)d=JSON.parse(sessionStorage.getItem('__telegram__initParams')||'{}').tgWebAppData;return d||''}catch(e){return ''}})();
+try{if(!U.id){const u=JSON.parse(new URLSearchParams(TGD).get('user'));U={name:esc(u.first_name),id:u.id}}}catch(e){}
+function openL(u){try{const m=String(u).match(/^https?:\/\/t\.me\/(.+)$/);if(m){TelegramWebviewProxy.postEvent('web_app_open_tg_link',JSON.stringify({path_full:'/'+m[1]}));return}}catch(e){}window.open(u)}
 let Qp=Promise.resolve();
 function srv(a,p){const run=()=>fetch(SRV+'/api',{method:'POST',headers:{'content-type':'text/plain'},body:JSON.stringify({a,p:p||{},initData:TGD,uid:U.id,l:LC[S.lang]})}).then(r=>r.json()).catch(()=>({error:'net'})).then(r=>{gate(r);return r});const q=Qp.then(run,run);Qp=q.catch(()=>{});return q}
 function gate(r){if(!r)return;if(r.closed)mnShow('🛠',r.msg||t('mnt'));else if(r.blocked)mnShow('🚫',t('blk'));else if(r.error=='auth')mnShow('✈️',t('tgo'));else if(r.error=='notoken')setupShow();else if(r.ok){const o=$('#mn');if(o&&!$('#st0'))o.style.display='none'}}
 function mnShow(i,m){let o=$('#mn');if(!o){o=document.createElement('div');o.id='mn';document.body.appendChild(o)}o.style.display='flex';o.innerHTML=`<div class="c tc"><div style="font-size:54px">${i}</div><p>${esc(m)}</p></div>`}
 function setupShow(){if(String(U.id)!==SUPER_ID)return mnShow('🛠',t('mnt'));if($('#st0'))return;let o=$('#mn');if(!o){o=document.createElement('div');o.id='mn';document.body.appendChild(o)}o.style.display='flex';o.innerHTML=`<div class="c tc"><h2>⚙ Setup</h2><input class="in" id="sk0" type="password" placeholder="Admin kodu"><input class="in" id="st0" placeholder="Bot token"><button class="btn g1 sm" data-m="setup">OK</button></div>`}
 function applyU(u){if(!u)return;Object.assign(S,{b:u.b,z:u.z,cx:u.cx,kc:u.kc,hy:u.hy,ha:u.ha,ads:u.ads,g:u.g,ms:u.ms,cl:u.cl||{},o:u.o||{},best:u.best,pts:u.pts,fr:u.fr,pt0:u.st0,h:(u.wd||[]).slice().reverse()});sv()}
-function errT(r){const e=r&&r.error;return e=='limit'?t('limit'):e=='nofund'?t('nofund'):e=='nz'?t('nz'):e=='nof'?t('nof'):e=='pending'?t('pw'):e=='net'||e=='server'?t('net'):e=='notjoined'?t('nj'):t('err')}
-async function boot(){const r=await srv('sync');if(r.ok){applyU(r.u);if(r.bot)BOT=r.bot;CHN=r.channel||'';if(r.channel)CH=r.channel;ADM=!!r.admin;if(!$('#gm').style.display||$('#gm').style.display=='none')render()}}
-setInterval(()=>{if(document.hidden||$('#gm').style.display=='flex'||CZ.busy)return;srv('sync').then(r=>{if(r.ok){applyU(r.u);ADM=!!r.admin;if(!B&&$('#cs').style.display!='flex')render()}})},45000);
+function errT(r){const e=r&&r.error;return e=='limit'?t('limit'):e=='nofund'?t('nofund'):e=='nz'?t('nz'):e=='nof'?t('nof'):e=='pending'?t('pw'):e=='net'||e=='server'?t('net'):e=='notjoined'?t('nj'):e=='wait'?t('wt'):e=='chfail'?t('cf'):t('err')}
+async function boot(){const r=await srv('sync');if(r.ok){applyU(r.u);if(r.bot)BOT=r.bot;CHN=r.channel||'';CT=r.tasks||[];if(r.channel)CH=r.channel;ADM=!!r.admin;if(!$('#gm').style.display||$('#gm').style.display=='none')render()}}
+setInterval(()=>{if(document.hidden||$('#gm').style.display=='flex'||CZ.busy)return;srv('sync').then(r=>{if(r.ok){applyU(r.u);ADM=!!r.admin;CT=r.tasks||[];if(!B&&$('#cs').style.display!='flex')render()}})},45000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)boot()});
 async function loadLB(){const r=await srv('leaders');if(r.ok){LB=r.list||[];if(tab=='top')render()}}
 async function claim(k){const r=await srv('task',{k});if(r.ok){applyU(r.u);render();toast('+'+r.got+' AZN')}else toast(errT(r))}
 async function adRun(k,sfxk){const a=await srv('ad_start',{k});if(!a.ok){toast(errT(a));return null}const ok=await showAd();if(!ok){toast(t('err'));return null}let r=await srv('ad_done',{k});if(r.error=='wait'){await new Promise(z=>setTimeout(z,800));r=await srv('ad_done',{k})}return r}
@@ -203,7 +206,7 @@ function aok(r){if(r.error){toast(r.error=='code'?(r.why=='locked'?'Kod bloklan�
 function adOpen(){let o=$('#adm');if(!o){o=document.createElement('div');o.id='adm';document.body.appendChild(o)}o.style.display='block';adDraw()}
 function adDraw(){const o=$('#adm'),hd=`<div class="hh"><b>⚙ Admin</b><button class="ib" data-m="x"><img src="${IC.x}" alt=""></button></div>`;
  if(!AM.on){o.innerHTML=hd+`<div class="c"><small>Admin kodu</small><input class="in" data-f="code" type="password" autocomplete="off"><button class="btn g1 sm" data-m="login">Daxil ol</button></div>`;return}
- const L=[['st','Panel',1],['us','İstifadəçi',apm('users')],['wd','Çıxarış',apm('wd')],['ms','Mesaj',apm('msg')],['ad','Adminlər',AM.sup],['cf','Ayarlar',AM.sup]].filter(x=>x[2]);
+ const L=[['st','Panel',1],['us','İstifadəçi',apm('users')],['wd','Çıxarış',apm('wd')],['ms','Mesaj',apm('msg')],['ad','Adminlər',AM.sup],['tk','Tapşırıq',AM.sup],['cf','Ayarlar',AM.sup]].filter(x=>x[2]);
  o.innerHTML=hd+`<div class="gr" style="grid-template-columns:repeat(3,1fr);margin-bottom:10px">${L.map(x=>`<button class="ch${x[0]==AM.tab?' on':''}" data-m="t" data-k="${x[0]}">${x[1]}</button>`).join('')}</div><div id="adb"></div>`}
 const uRow=u=>`<div class="lr" data-m="uo" data-id="${u.id}" style="cursor:pointer"><span class="av">${esc(String(u.name||'?').charAt(0))}</span><b class="nm">${esc(u.name)}${u.un?' @'+esc(u.un):''}<br><small>${u.id} · ${u.b} AZN · ${u.z} ZBZ${u.blocked?' · 🚫':''}</small></b></div>`;
 async function adTab(k){AM.tab=k;adDraw();const b=$('#adb');
@@ -212,6 +215,7 @@ async function adTab(k){AM.tab=k;adDraw();const b=$('#adb');
  else if(k=='wd'){b.innerHTML=`<div class="gr" style="margin-bottom:10px"><button class="ch${AM.wf=='pending'?' on':''}" data-m="wf" data-s="pending">Gözləyən</button><button class="ch${AM.wf==''?' on':''}" data-m="wf" data-s="">Hamısı</button></div><div id="adl"></div>`;adWd()}
  else if(k=='ms'){b.innerHTML=`<div class="c"><b>Mesaj göndər</b><input class="in" data-f="mto" placeholder="Boş = hamıya, və ya Telegram ID" inputmode="numeric"><textarea class="in" data-f="mtx" rows="5" placeholder="Mətn"></textarea><button class="btn g1 sm" data-m="bc">Göndər</button><small>Yalnız botu /start edənlərə çatır.</small></div>`}
  else if(k=='ad'){const A=AM.cfg.admins||{};b.innerHTML=`<div class="c"><b>Alt adminlər</b>${Object.keys(A).map(i=>`<div class="rw"><span>${i}<br><small>${A[i].map(p=>PL[p]).join(', ')||'icazə yoxdur'}</small></span><button class="ch" data-m="adel" data-id="${i}">Sil</button></div>`).join('')||'<br><small>Hələ yoxdur</small>'}</div><div class="c"><b>Əlavə et / yenilə</b><input class="in" data-f="aid" placeholder="Telegram ID" inputmode="numeric">${(AM.cfg.PERMS||Object.keys(PL)).map(p=>`<label style="display:block;padding:6px 0"><input type="checkbox" data-p="${p}"> ${PL[p]}</label>`).join('')}<button class="btn g3 sm" data-m="aadd">Yadda saxla</button></div>`}
+ else if(k=='tk'){adTasks()}
  else if(k=='cf'){const c=AM.cfg;b.innerHTML=`<div class="c"><b>Bot tokeni</b> <small>${c.token?'✓ @'+esc(c.bot):'yoxdur'}</small><input class="in" data-f="tok" type="password" placeholder="Yeni token"><button class="btn g1 sm" data-m="stok">Yadda saxla</button></div><div class="c"><b>Oyun</b><small>Play düyməsinin ünvanı</small><input class="in" data-f="app" value="${esc(c.app||'')}" placeholder="https://..."><small>Kanal (@ad)</small><input class="in" data-f="chn" value="${esc(c.channel||'')}" placeholder="@kanal"><small>Gündəlik öldürmə limiti</small><input class="in" data-f="kcap" type="number" value="${c.kcap}"><small>Bir hərəkətə max xal</small><input class="in" data-f="smax" type="number" value="${c.smax}"><small>Reklam min. müddət (ms)</small><input class="in" data-f="adms" type="number" value="${c.adms}"><button class="btn g3 sm" data-m="scfg">Yadda saxla</button></div><div class="c"><b>Admin kodunu dəyiş</b><input class="in" data-f="ncode" type="password" placeholder="Yeni kod (min 6)"><button class="btn g4 sm" data-m="scode">Dəyiş</button></div>`}}
 async function adUsers(more){const r=await aq('a_users',{cursor:more?AM.cur:''});if(!aok(r))return;AM.cur=r.cursor;AM.ul=more?AM.ul.concat(r.list):r.list;$('#ul').innerHTML=AM.ul.map(uRow).join('')+(AM.cur?'<button class="btn g4 sm" data-m="more">Daha çox</button>':'')}
 async function adUser(id){const r=await aq('a_user',{id});if(!aok(r))return;const u=r.u;AM.u=u;const st={pending:'⏳',paid:'✅',rejected:'❌'};
@@ -221,6 +225,10 @@ async function adUser(id){const r=await aq('a_user',{id});if(!aok(r))return;cons
  +(apm('msg')?`<div class="c"><b>Mesaj</b><textarea class="in" data-f="mt" rows="3"></textarea><button class="btn g1 sm" data-m="umsg">Göndər</button></div>`:'')
  +`<div class="c"><b>Çıxarışlar</b>${(r.wds||[]).map(w=>`<div class="rw"><span>${w.amt} AZN<br><small>${esc(w.m)} · ${new Date(w.t).toLocaleDateString()}</small></span><span>${st[w.st]||w.st}</span></div>`).join('')||'<br><small>Yoxdur</small>'}</div>`}
 async function adWd(){const r=await aq('a_wds',{st:AM.wf});if(!aok(r))return;$('#adl').innerHTML=r.list.map(w=>`<div class="c"><b>${w.amt} AZN</b> · ${esc(w.m)}${w.op?' '+esc(w.op):''}<br><small>${esc(w.name)}${w.un?' @'+esc(w.un):''} · ${w.uid}</small><div style="word-break:break-all;margin:6px 0">${esc(w.d)}</div><small>${new Date(w.t).toLocaleString()} · ${w.st}</small><div class="gr" style="margin-top:8px"><button class="ch" data-m="ws" data-w="${w.id}" data-s="paid">✅ Ödənildi</button><button class="ch" data-m="ws" data-w="${w.id}" data-s="rejected">❌ Rədd</button></div>${w.st!='pending'?`<button class="ch" style="margin-top:8px;width:100%" data-m="ws" data-w="${w.id}" data-s="pending">↩ Gözləyənə qaytar</button>`:''}</div>`).join('')||'<small>Boşdur</small>'}
+const TTL={chan:'Kanala qoşul',link:'Link / bot aç',score:'Bir oyunda X xal',ads:'Gündəlik X reklam',games:'X oyun oyna',friends:'X dost dəvət et'};
+function adTasks(){const L=AM.cfg.tasks||[],e=L.find(x=>x.id==AM.te)||{type:'chan',on:1,daily:0};
+ $('#adb').innerHTML=`<div class="c"><b>Tapşırıqlar</b>${L.map(x=>`<div class="rw"><span>${x.on?'🟢':'⚪'} ${esc(x.title)}<br><small>${TTL[x.type]}${x.need?' · '+x.need:''} · +${x.r} AZN${x.daily?' · gündəlik':''}</small></span><span><button class="ch" data-m="tedit" data-id="${x.id}">✏️</button> <button class="ch" data-m="tdel" data-id="${x.id}">🗑</button></span></div>`).join('')||'<br><small>Hələ yoxdur</small>'}</div>
+ <div class="c"><b>${AM.te?'Dəyiş':'Yeni tapşırıq'}</b><input class="in" data-f="tt" placeholder="Tapşırıq adı" value="${esc(e.title||'')}"><select class="in" data-f="ty">${Object.keys(TTL).map(k=>`<option value="${k}"${k==e.type?' selected':''}>${TTL[k]}</option>`).join('')}</select><input class="in" data-f="tl" placeholder="Link (https://t.me/... bot və ya kanal)" value="${esc(e.link||'')}"><input class="in" data-f="tc" placeholder="Kanal @ad (yalnız 'Kanala qoşul' üçün)" value="${esc(e.ch||'')}"><input class="in" data-f="tn" type="number" placeholder="X (xal / say)" value="${e.need||''}"><input class="in" data-f="tr" type="number" step="any" placeholder="Mükafat (AZN)" value="${e.r||''}"><select class="in" data-f="td"><option value="0"${e.daily?'':' selected'}>Bir dəfə</option><option value="1"${e.daily?' selected':''}>Hər gün</option></select><select class="in" data-f="to"><option value="1"${e.on===0?'':' selected'}>Aktiv</option><option value="0"${e.on===0?' selected':''}>Dayandırılıb</option></select><button class="btn g3 sm" data-m="tsave">Yadda saxla</button>${AM.te?'<button class="ch" style="width:100%;margin-top:8px" data-m="tnew">+ Yeni</button>':''}<small>Kanal tapşırığı üçün bot həmin kanalda admin olmalıdır.</small></div>`}
 async function adCfg(){const r=await aq('a_login');if(r.cfg)AM.cfg=r.cfg}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-m]');if(!b)return;const m=b.dataset.m,d=b.dataset;let r;
  if(m=='x'){const o=$('#adm');o.style.display='none';AM.on=0;AM.c=''}
@@ -241,6 +249,10 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-m]')
  else if(m=='adel'){r=await aq('a_admin',{id:d.id,del:1});if(aok(r)){AM.cfg.admins=r.admins;adTab('ad')}}
  else if(m=='bot0'||m=='bot1'){r=await aq('a_bot',{open:m=='bot1',msg:av('bmsg')});if(aok(r)){AM.cfg.msg=av('bmsg');toast('✓');adTab('st')}}
  else if(m=='stok'){r=await aq('a_token',{token:av('tok')});if(aok(r)){toast('✓ @'+r.bot);await adCfg();adTab('cf')}}
+ else if(m=='tedit'){AM.te=d.id;adTasks()}
+ else if(m=='tnew'){AM.te='';adTasks()}
+ else if(m=='tdel'){r=await aq('a_task',{op:'del',id:d.id});if(aok(r)){AM.cfg.tasks=r.tasks;AM.te='';adTasks()}}
+ else if(m=='tsave'){r=await aq('a_task',{task:{id:AM.te||'',title:av('tt'),type:av('ty'),link:av('tl'),ch:av('tc'),need:+av('tn'),r:+av('tr'),daily:+av('td'),on:+av('to')}});if(r.error=='bad')toast('Xanaları yoxla');else if(aok(r)){AM.cfg.tasks=r.tasks;AM.te='';toast('✓');adTasks()}}
  else if(m=='scfg'){r=await aq('a_cfg',{app:av('app'),channel:av('chn'),kcap:+av('kcap'),smax:+av('smax'),adms:+av('adms')});if(aok(r)){toast('✓');await adCfg()}}
  else if(m=='scode'){const n=av('ncode');r=await aq('a_code',{n});if(r.error=='short')toast('Ən azı 6 simvol');else if(aok(r)){AM.c=n;toast('✓')}}
 });
@@ -250,7 +262,10 @@ const btn=(c,i,x,a,s,d)=>`<button class="btn ${c}" data-a="${a}"${d?' disabled':
 function toast(m){const e=$('#ts');e.textContent=m;e.style.opacity=1;clearTimeout(toast.x);toast.x=setTimeout(()=>e.style.opacity=0,2200)}
 const ic=(k,h)=>`<img class="ic" src="${IC[k]}" alt="" style="height:${h}px">`;
 const one=k=>k=='t4'||k=='t6',cl=k=>(one(k)?S.o:S.cl)[k];
-const TK=()=>[['t1','tv',.02,S.ads>=5,Math.min(S.ads,5)+'/5'],['t5','gift',.01,1,''],['t4','ticket',.03,S.ch,''],['t6','group',REF,S.fr>=1,Math.min(S.fr,1)+'/1'],['t2','game',.02,S.g>=1,'']];
+const TK=()=>TK0().filter(x=>x[0]!='t4'||CHN),TK0=()=>[['t1','tv',.02,S.ads>=5,Math.min(S.ads,5)+'/5'],['t5','gift',.01,1,''],['t4','ticket',.03,S.ch,''],['t6','group',REF,S.fr>=1,Math.min(S.fr,1)+'/1'],['t2','game',.02,S.g>=1,'']];
+const CTI={chan:'ticket',link:'gift',score:'game',ads:'tv',games:'game',friends:'group'};
+function ctP(x){const v=x.type=='score'?(x.daily?S.ms:S.best):x.type=='ads'?S.ads:x.type=='games'?S.g:x.type=='friends'?S.fr:null;if(v===null){const o=!!(S.to&&S.to[x.id]);return[o,'']}return[v>=x.need,fp(Math.min(v,x.need))+'/'+x.need]}
+function ctView(){return CT.map(x=>{const c=(x.daily?S.cl:S.o)['x'+x.id],lk=x.type=='chan'||x.type=='link',[met,pr]=ctP(x),first=lk&&!met&&!c;return `<div class="c tk"><i class="ti">${ic(CTI[x.type]||'gift',48)}</i><span class="nm">${esc(x.title)}<br><small>+${x.r} AZN${pr?' · '+pr:''}${x.daily?' · ⟳':''}</small></span><button class="ch${(first||(met&&!c))?' on':''}" data-a="${first?'tgo':'ctk'}" data-id="${x.id}" ${(first||(met&&!c))?'':'disabled'}>${c?'✓':first?t('copen'):t('claim')}</button></div>`}).join('')}
 const V={
 home:()=>{const d=S.ads>=20;return `<div class="bal"><div class="stk">${ic('coins',86)}</div><small>${t('balance')}</small><div class="amt">${f3(S.b)} <em>AZN</em></div><small>${t('rule')}</small><br><b style="color:var(--gold)">ZBZ ${fz(S.z)}</b></div>`
 +btn('g1','game',t('play'),'play',`${ic('crown',20)} ${t('best')}: ${fp(S.best)}`)
@@ -258,7 +273,7 @@ home:()=>{const d=S.ads>=20;return `<div class="bal"><div class="stk">${ic('coin
 +btn('g6','chest',t('chest'),'cs',`10.555 ZBZ · ${S.cx||0}x`)
 +btn('g2','tv',t('ad'),'ad',d?t('back'):`+${AD} ZBZ<br>${S.ads}/20 ${t('wat')}`,d)
 +`<div class="c${d?' dn':''}"><div class="rw nb"><span>🎞️ ${t('daily')}</span><b>${S.ads}/20${d?' ✓':''}</b></div><div class="bar"><i style="width:${S.ads*5}%"></i></div>${d?`<p class="m0 ct">🎉 ${t('limit')}</p>`:''}</div>`+btn('g4','trade',t('trade'),'trade',t('soon'))},
-tasks:()=>TK().map(([k,i,r,d,p])=>{const c=cl(k),j=k=='t4'&&!S.ch,on=(d&&!c)||j;return `<div class="c tk"><i class="ti">${ic(i,48)}</i><span class="nm">${t(k)}<br><small>+${r} AZN${p?' · '+p:''}</small></span><button class="ch${on?' on':''}" data-a="${j?'ch':'cl'}" data-k="${k}" data-r="${r}" ${on?'':'disabled'}>${c?'✓':j?t('join'):t('claim')}</button></div>`}).join(''),
+tasks:()=>ctView()+TK().map(([k,i,r,d,p])=>{const c=cl(k),j=k=='t4'&&!S.ch,on=(d&&!c)||j;return `<div class="c tk"><i class="ti">${ic(i,48)}</i><span class="nm">${t(k)}<br><small>+${r} AZN${p?' · '+p:''}</small></span><button class="ch${on?' on':''}" data-a="${j?'ch':'cl'}" data-k="${k}" data-r="${r}" ${on?'':'disabled'}>${c?'✓':j?t('join'):t('claim')}</button></div>`}).join(''),
 top:()=>{const me=String(U.id),l=LB.map(r=>[r.name,r.best,String(r.id)==me]);if(!l.some(r=>r[2]))l.push([U.name,S.best,1]);l.sort((a,b)=>b[1]-a[1]);return l.map((r,i)=>`<div class="lr${i<3?' r'+(i+1):''}${r[2]?' me':''}"><span class="rkn">${['🥇','🥈','🥉'][i]||i+1}</span><span class="av">${esc(String(r[0]).charAt(0))}</span><b class="nm">${esc(r[0])}</b><span>${fp(r[1])}</span></div>`).join('')},
 wallet:()=>{const M=[t('card'),'M10',t('mobile'),'USDT (TON)'],ph=['1234 5678 9012 3456','+994 50 123 45 67','+994 50 123 45 67','UQ…'];
 return `<div class="c"><small>${t('balance')}</small><h1>${f3(S.b)} AZN</h1><small>${t('min')}</small></div><div class="c"><div class="gr">${M.map((m,i)=>`<button class="ch${i==wm?' on':''}" data-a="wm" data-i="${i}">${['💳','📱','📞','💲'][i]} ${m}</button>`).join('')}</div>`+(wm==2?`<select class="in" id="op"><option>Azercell</option><option>Bakcell</option><option>Nar</option></select>`:'')+`<input class="in" id="wd" placeholder="${ph[wm]}" inputmode="${wm==0?'numeric':'text'}"><input class="in" id="wa" type="number" placeholder="${t('amount')}" min="5" step="0.5"><div class="gr" style="grid-template-columns:repeat(4,1fr)">${[5,10,25,'max'].map(x=>`<button class="ch" data-a="qa" data-v="${x}">${x=='max'?'MAX':x}</button>`).join('')}</div><p id="est"></p>`+btn('g3','wallet',t('send'),'wd',t('min'))+`</div><div class="c"><b>${t('hist')}</b>`+S.h.map(h=>`<div class="rw"><span>#${String(h.id).split('_')[0].slice(-6).toUpperCase()}<br><small>${({card:t('card'),m10:'M10',mobile:t('mobile'),usdt:'USDT'})[h.m]||h.m}</small></span><span>${h.amt} AZN<br><small style="color:${h.st=='paid'?'#4ade80':h.st=='rejected'?'#ff6b6b':'inherit'}">${t(h.st=='paid'?'paid':h.st=='rejected'?'rej':'pend')}</small></span></div>`).join('')+`</div>`},
@@ -346,14 +361,16 @@ async function wd(){const a=+$('#wa').value,v=$('#wd').value.trim(),dg=v.replace
  if(wd.r)return;wd.r=1;const r=await srv('wd',{amt:a,m:['card','m10','mobile','usdt'][wm],d:v,op:($('#op')||{}).value||''});wd.r=0;if(r.ok){applyU(r.u);render();toast(t('ok'))}else toast(errT(r))}
 document.addEventListener('input',e=>{if(e.target.id=='wa'&&wm==3)$('#est').textContent='≈ '+((+e.target.value||0)/USD).toFixed(2)+' USDT'});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=b.dataset.a,d=b.dataset;sfx('click');b.classList.remove('pr');void b.offsetWidth;b.classList.add('pr');
- if(a=='tb'){tab=d.k;render();if(tab=='top')loadLB()}
+ if(a=='tb'){tab=d.k;render();if(tab=='top')loadLB();if(tab=='friends'||tab=='tasks'||tab=='wallet')boot()}
  else if(a=='play'){$('#gt').innerHTML=`<div class="rw" style="border:0"><span><small>${t('score')}</small><h1 class="m0" id="sc">0</h1></span><span><small>${t('best')}</small><h1 class="m0" id="bs" style="font-size:22px">0</h1></span><span><small>Hype ⚡</small><h1 class="m0" id="hy" style="font-size:22px">0</h1></span></div>`;gbar();$('#gm').style.display='flex';newGame()}
  else if(a=='hy')hyAd()
  else if(a=='ad')ad()
  else if(a=='nw'){const mm=mvn;if(mm)srv('game',{moves:mm,score:0}).then(r=>{if(r.ok){applyU(r.u);const h=$('#hy');if(h)h.textContent=S.hy}});newGame()}
  else if(a=='co')collect()
  else if(a=='cl')claim(d.k)
- else if(a=='ch'){S.ch=1;sv();window.open('https://t.me/'+String(CH).replace('@',''));render()}
+ else if(a=='tgo'){const x=CT.find(q=>q.id==d.id);if(x){if(x.link)openL(x.link);if(x.type=='link')srv('tstart',{id:x.id});S.to=S.to||{};S.to[x.id]=1;sv();render()}}
+ else if(a=='ctk'){srv('ctask',{id:d.id}).then(r=>{if(r.ok){if(S.to)delete S.to[d.id];applyU(r.u);render();toast('+'+r.got+' AZN')}else toast(errT(r))})}
+ else if(a=='ch'){S.ch=1;sv();openL('https://t.me/'+String(CH).replace('@',''));render()}
  else if(a=='trade')toast(t('trade')+': '+t('soon'))
  else if(a=='zc')zclaim()
  else if(a=='tl'){S.lang=+d.i;sv();render();tut(0)}
