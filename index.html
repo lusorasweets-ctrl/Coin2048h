@@ -222,7 +222,7 @@ setInterval(()=>{if(document.hidden||$('#gm').style.display=='flex'||CZ.busy)ret
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)boot()});
 async function loadLB(){const r=await srv('leaders');if(r.ok){LB=r.list||[];if(tab=='top')render()}}
 async function claim(k){const r=await srv('task',{k});if(r.ok){applyU(r.u);render();toast('+'+r.got+' AZN')}else toast(errT(r))}
-async function adRun(k,sfxk){const a=await srv('ad_start',{k});if(!a.ok){toast(errT(a));return null}const ok=await showAd();if(!ok){toast(t('err')+' ['+AdE+']');return null}toast('⏳ 3s');await new Promise(z=>setTimeout(z,3000));let r=await srv('ad_done',{k});for(let i=0;i<8&&r.error=='wait';i++){await new Promise(z=>setTimeout(z,1000));r=await srv('ad_done',{k})}return r}
+async function adRun(k,sfxk){const a=await srv('ad_start',{k});if(!a.ok){toast(errT(a));return null}const ok=await showAd();if(!ok){toast(t('err')+' ['+AdE+']');return null}toast('⏳ 3s');await new Promise(z=>setTimeout(z,3000));let r=await srv('ad_done',{k});for(let i=0;i<15&&r.error=='wait';i++){await new Promise(z=>setTimeout(z,1500));r=await srv('ad_done',{k})}return r}
 /* ---- admin panel (added) ---- */
 const AM={c:'',on:0,sup:0,perms:[],cfg:{},tab:'st',u:null,ul:[],cur:'',wf:'pending'};
 const apm=k=>AM.sup||AM.perms.includes(k);
