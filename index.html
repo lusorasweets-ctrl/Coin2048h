@@ -134,7 +134,7 @@ nav button.on em{animation:bob 2.4s ease-in-out infinite}nav button.on img{trans
 .pya{display:flex;flex-direction:column;align-items:flex-end;gap:4px;color:#4ade80;white-space:nowrap}
 .pyb{font-style:normal;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;border:1px solid}.pyb.ok{color:#4ade80;border-color:#4ade80;background:rgba(74,222,128,.12)}.pyb.wt{color:#fbbf24;border-color:#fbbf24;background:rgba(251,191,36,.1)}
 .pyc{display:flex;gap:6px}.pyx{margin-top:8px;padding:10px;border-radius:12px;background:rgba(0,0,0,.35)}.pyx code{display:block;word-break:break-all;font-size:11px;margin-top:4px;color:#cfe}
-</style></head><body>
+</style><script src="https://sad.adsgram.ai/js/sad.min.js"></script></head><body>
 <div id="ld"><canvas id="lc"></canvas></div>
 <div id="fx"></div><main id="v"></main><nav id="nv"></nav>
 <div id="gm"><div id="gt"></div><div id="bd"></div><div id="gb"></div></div>
@@ -221,7 +221,7 @@ setInterval(()=>{if(document.hidden||$('#gm').style.display=='flex'||CZ.busy)ret
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)boot()});
 async function loadLB(){const r=await srv('leaders');if(r.ok){LB=r.list||[];if(tab=='top')render()}}
 async function claim(k){const r=await srv('task',{k});if(r.ok){applyU(r.u);render();toast('+'+r.got+' AZN')}else toast(errT(r))}
-async function adRun(k,sfxk){const a=await srv('ad_start',{k});if(!a.ok){toast(errT(a));return null}const ok=await showAd();if(!ok){toast(t('err'));return null}let r=await srv('ad_done',{k});if(r.error=='wait'){await new Promise(z=>setTimeout(z,800));r=await srv('ad_done',{k})}return r}
+async function adRun(k,sfxk){const a=await srv('ad_start',{k});if(!a.ok){toast(errT(a));return null}const ok=await showAd();if(!ok){toast(t('err'));return null}let r=await srv('ad_done',{k});for(let i=0;i<6&&r.error=='wait';i++){await new Promise(z=>setTimeout(z,1000));r=await srv('ad_done',{k})}return r}
 /* ---- admin panel (added) ---- */
 const AM={c:'',on:0,sup:0,perms:[],cfg:{},tab:'st',u:null,ul:[],cur:'',wf:'pending'};
 const apm=k=>AM.sup||AM.perms.includes(k);
@@ -332,7 +332,7 @@ function pyView(){const s=PY.stats||{total:0,paid:0,pending:0,sumPaid:0,sumPendi
  +`<h3 class="pya0">${t('pyact')}</h3>`+(PY.list.map(x=>`<div class="c pyi"><div class="rw nb"><span class="pyn"><span class="av">${esc(String(x.name).charAt(0))}</span><span><b>${esc(x.name)}</b>${x.un?`<br><small>@${esc(x.un)}</small>`:''}</span></span><span class="pya"><b>${pyM(x.amt)}</b><em class="pyb ${x.st=='paid'?'ok':'wt'}">${t(x.st=='paid'?'pyok':'pywait')}</em></span></div><div class="rw nb"><span><small>${t('pyreq')}</small><br>${pyD(x.t)}</span>${x.tx?`<span class="pyc"><button class="ch" data-a="ptx" data-h="${esc(x.tx)}">↗ TX</button><button class="ch" data-a="psh" data-h="${esc(x.tx)}">⤴ ${t('share')}</button></span>`:''}</div>${x.tx?`<div class="pyx"><small>${t('pyhash')}</small><code>${esc(x.tx)}</code></div>`:''}</div>`).join('')||`<div class="c tc"><small>${t('pynone')}</small></div>`)}
 function render(){const h=document.documentElement;h.dir=S.lang==5?'rtl':'ltr';h.lang=LC[S.lang];$('#v').innerHTML=V[tab]();$('#nv').innerHTML=tabs.map(([k,i])=>`<button class="${k==tab?'on':''}" data-a="tb" data-k="${k}"><em>${ic(i,tabs.length>6?34:40)}</em><span>${t(k)}</span></button>`).join('');}
 /* Real ad SDK goes here: resolve(true) only when the ad finishes, resolve(false) if closed early */
-function showAd(){return new Promise(r=>{$('#ad').style.display='flex';$('#at').innerHTML=t('adrun')+'<br><small>'+t('testad')+'</small>';let n=5;$('#ac').textContent=n;const iv=setInterval(()=>{$('#ac').textContent=--n;if(n<=0){clearInterval(iv);$('#ad').style.display='none';r(true)}},1000)})}
+let AdC;function showAd(){return new Promise(async r=>{try{if(!window.Adsgram)return r(false);AdC=AdC||window.Adsgram.init({blockId:'53315'});const x=await AdC.show();r(!!(x&&x.done))}catch(e){r(false)}})}
 async function ad(){if(ad.r)return;if(S.ads>=20)return toast(t('limit'));ad.r=1;const r=await adRun('earn');ad.r=0;if(r&&r.ok){sfx('coin');applyU(r.u);render();toast('+'+AD+' ZBZ')}else if(r)toast(errT(r))}
 /* Hype ads: separate from the earning ads, 2 hype each, 15 per day, no AZN */
 function gbar(){const d=S.ha>=15;$('#gb').innerHTML=`<div class="gr"><button class="btn g4 sm" data-a="nw">${ic('swap',30)} ${t('newg')}</button><button class="btn g3 sm" data-a="co">${ic('coins',30)} ${t('collect')}</button></div><button class="btn g1 hb${S.hy<=0?' pl':''}" data-a="hy"${d?' disabled':''}><i>${ic('play',44)}</i><span><strong>${t('hype')}</strong><small>${d?t('back'):t('hy2')+' · '+S.ha+'/15'}</small></span><b>⚡</b></button>`}
