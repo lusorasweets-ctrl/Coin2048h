@@ -216,7 +216,7 @@ function mnShow(i,m){let o=$('#mn');if(!o){o=document.createElement('div');o.id=
 function setupShow(){if(String(U.id)!==SUPER_ID)return mnShow('🛠',t('mnt'));if($('#st0'))return;let o=$('#mn');if(!o){o=document.createElement('div');o.id='mn';document.body.appendChild(o)}o.style.display='flex';o.innerHTML=`<div class="c tc"><h2>⚙ Setup</h2><input class="in" id="sk0" type="password" placeholder="Admin kodu"><input class="in" id="st0" placeholder="Bot token"><button class="btn g1 sm" data-m="setup">OK</button></div>`}
 function applyU(u){if(!u)return;Object.assign(S,{b:u.b,z:u.z,cx:u.cx,kc:u.kc,hy:u.hy,ha:u.ha,ads:u.ads,g:u.g,ms:u.ms,cl:u.cl||{},o:u.o||{},best:u.best,pts:u.pts,fr:u.fr,pt0:u.st0,h:(u.wd||[]).slice().reverse()});sv()}
 function errT(r){const e=r&&r.error;return e=='limit'?t('limit'):e=='nofund'?t('nofund'):e=='nz'?t('nz'):e=='nof'?t('nof'):e=='pending'?t('pw'):e=='net'||e=='server'?t('net'):e=='notjoined'?t('nj'):e=='wait'?t('wt'):e=='chfail'?t('cf'):t('err')}
-const errT0=errT;errT=function(r){return errT0(r)+(r&&r.error?' ['+r.error+']':'')};
+const errT0=errT;errT=function(r){return errT0(r)+(r&&r.error?' ['+r.error+(r.why&&ADM?': '+r.why:'')+']':'')};
 async function boot(){const r=await srv('sync');if(r.ok){applyU(r.u);if(r.bot)BOT=r.bot;CHN=r.channel||'';CT=r.tasks||[];if(r.channel)CH=r.channel;ADM=!!r.admin;if(!$('#gm').style.display||$('#gm').style.display=='none')render()}}
 setInterval(()=>{if(document.hidden||$('#gm').style.display=='flex'||CZ.busy)return;srv('sync').then(r=>{if(r.ok){applyU(r.u);ADM=!!r.admin;CT=r.tasks||[];if(!B&&$('#cs').style.display!='flex')render()}})},45000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)boot()});
