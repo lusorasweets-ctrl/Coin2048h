@@ -155,6 +155,15 @@ img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 #adm,#hl{overflow-x:hidden}
 nav{max-width:540px;margin:0 auto}
 @media(max-width:360px){.pys b{font-size:17px}.btn strong{font-size:17px}}
+#tu .tt{top:auto;bottom:auto;width:min(94vw,400px);max-height:48vh;display:flex;flex-direction:column;z-index:3;padding:12px 14px}
+#tu .tt.bt{bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+#tu .tt.tp{top:calc(10px + env(safe-area-inset-top,0px))}
+#tu .tsc{overflow-y:auto;min-height:0;flex:1 1 auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+#tu .tt .dts,#tu .tt .gr{flex:none}
+#tu .tt p{margin:6px 0 8px;font-size:15px;line-height:1.45}
+#tu .tt .dts{margin:2px 0 10px}
+#tu>.c.tc:not(.tt){max-height:90vh;overflow-y:auto}
+.sp{animation:none!important}
 </style><script src="https://sad.adsgram.ai/js/sad.min.js"></script></head><body>
 <div id="ld"><canvas id="lc"></canvas></div>
 <div id="fx"></div><main id="v"></main><nav id="nv"></nav>
@@ -354,12 +363,12 @@ home:()=>{const d=S.ads>=30;return `<div class="bal"><div class="stk">${ic('coin
 +`<div class="c${d?' dn':''}"><div class="rw nb"><span>🎞️ ${t('daily')}</span><b>${S.ads}/30${d?' ✓':''}</b></div><div class="bar"><i style="width:${Math.min(S.ads/30*100,100)}%"></i></div>${d?`<p class="m0 ct">🎉 ${t('limit')}</p>`:''}</div>`+btn('g4','trade',t('trade'),'trade',t('soon'))},
 tasks:()=>ctView()+TK().map(([k,i,r,d,p])=>{const c=cl(k),j=k=='t4'&&!S.ch,on=(d&&!c)||j;return `<div class="c tk"><i class="ti">${ic(i,48)}</i><span class="nm">${t(k)}<br><small>+${r} AZN${p?' · '+p:''}</small></span><button class="ch${on?' on':''}" data-a="${j?'ch':'cl'}" data-k="${k}" data-r="${r}" ${on?'':'disabled'}>${c?'✓':j?t('join'):t('claim')}</button></div>`}).join(''),
 top:()=>{const me=String(U.id),tg=`<div class="gr" style="margin-bottom:10px"><button class="ch${LT=='azn'?' on':''}" data-a="lt" data-k="azn">💰 ${t('lbz')}</button><button class="ch${LT=='ads'?' on':''}" data-a="lt" data-k="ads">🎬 ${t('lba')}</button></div>`,
-  row=(i,nm,val,m,ph)=>`<div class="lr${i<3?' r'+(i+1):''}${m?' me':''}"><span class="rkn">${['🥇','🥈','🥉'][i]||i+1}</span><span class="av">${esc(String(nm).charAt(0))}${ph&&/^https:\/\//.test(ph)?`<img src="${esc(ph)}" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.remove()">`:''}</span><b class="nm">${esc(nm)}</b><span>${val}</span></div>`;
+  row=(i,nm,val,m,ph,pid)=>`<div class="lr${i<3?' r'+(i+1):''}${m?' me':''}"><span class="rkn">${['🥇','🥈','🥉'][i]||i+1}</span><span class="av">${esc(String(nm).charAt(0))}${pid?`<img src="${ph&&/^https:\/\//.test(ph)?esc(ph):SRV+'/av/'+pid}" data-f="${ph?SRV+'/av/'+pid:''}" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="if(this.dataset.f){this.src=this.dataset.f;this.dataset.f=''}else this.remove()">`:''}</span><b class="nm">${esc(nm)}</b><span>${val}</span></div>`;
   if(LT=='ads'){const r=LA.rw,nf=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' '),we=LA.wend?pyD(LA.wend).slice(0,10):'';
    return tg+(r?`<div class="c" style="text-align:center;border-color:var(--gold)"><b style="color:var(--gold)">🏆 ${t('lbw')}</b><p style="margin:8px 0">${t('lbp').replace('{n}',r.n).replace('{z}',nf(r.z)).replace('{e}',nf(Math.floor(r.z/r.n)))}</p><small>${t('lbe')}: ${we}</small></div>`:'')
-   +LA.list.slice(0,100).map((x,i)=>row(i,x.name,x.a+' 🎬',String(x.id)==me,x.ph)).join('')}
-  const l=LB.map(r=>[r.name,r.b,String(r.id)==me,r.ph]);if(!l.some(r=>r[2])&&l.length<100&&S.b>0)l.push([U.name,S.b,1,U.ph]);l.sort((a,b)=>b[1]-a[1]);
-  return tg+l.slice(0,100).map((r,i)=>row(i,r[0],pyM(r[1]),r[2],r[3])).join('')},
+   +LA.list.slice(0,100).map((x,i)=>row(i,x.name,x.a+' 🎬',String(x.id)==me,x.ph,x.id)).join('')}
+  const l=LB.map(r=>[r.name,r.b,String(r.id)==me,r.ph,r.id]);if(!l.some(r=>r[2])&&l.length<100&&S.b>0)l.push([U.name,S.b,1,U.ph,U.id]);l.sort((a,b)=>b[1]-a[1]);
+  return tg+l.slice(0,100).map((r,i)=>row(i,r[0],pyM(r[1]),r[2],r[3],r[4])).join('')},
 wallet:()=>{const M=[t('card'),'M10',t('mobile'),'USDT (TON)'],ph=['1234 5678 9012 3456','+994 50 123 45 67','+994 50 123 45 67','UQ…'];
 return `<div class="c"><small>${t('balance')}</small><h1>${f3(S.b)} AZN</h1><small>${t('min')}</small></div><div class="c"><div class="gr">${M.map((m,i)=>`<button class="ch${i==wm?' on':''}" data-a="wm" data-i="${i}">${['💳','📱','📞','💲'][i]} ${m}</button>`).join('')}</div>`+(wm==2?`<select class="in" id="op"><option>Azercell</option><option>Bakcell</option><option>Nar</option></select>`:'')+`<input class="in" id="wd" placeholder="${ph[wm]}" inputmode="${wm==0?'numeric':'text'}"><input class="in" id="wa" type="number" placeholder="${t('amount')}" min="5" step="0.5"><div class="gr" style="grid-template-columns:repeat(4,1fr)">${[5,10,25,'max'].map(x=>`<button class="ch" data-a="qa" data-v="${x}">${x=='max'?'MAX':x}</button>`).join('')}</div><p id="est"></p>`+btn('g3','wallet',t('send'),'wd',t('min'))+`</div><div id="wdp">${wdProg()}</div>${S.h.some(h=>h.st=='pending')?`<div class="c"><small>⏳ ${t('wdtime')}</small></div>`:''}<div class="c"><b>${t('hist')}</b>`+S.h.map(h=>`<div class="rw"><span>#${String(h.id).split('_')[0].slice(-6).toUpperCase()}<br><small>${({card:t('card'),m10:'M10',mobile:t('mobile'),usdt:'USDT'})[h.m]||h.m}</small></span><span>${h.amt} AZN<br><small style="color:${h.st=='paid'?'#4ade80':h.st=='rejected'?'#ff6b6b':'inherit'}">${t(h.st=='paid'?'paid':h.st=='rejected'?'rej':'pend')}</small></span></div>`).join('')+`</div>`},
 pays:()=>pyView(),
@@ -540,20 +549,20 @@ try{TelegramWebviewProxy.postEvent('web_app_ready','');TelegramWebviewProxy.post
 document.querySelectorAll('img[data-ic]').forEach(i=>i.src=IC[i.dataset.ic]);
 render();boot();
 function loader(){
- const ld=$('#ld'),end=()=>{ld.style.opacity=0;setTimeout(()=>ld.remove(),700)};
+ const ld=$('#ld'),end=()=>{if(end.d)return;end.d=1;ld.style.opacity=0;setTimeout(()=>ld.remove(),600)};ld.onclick=end;setTimeout(end,5000);
  try{
- const cv=$('#lc'),cx=cv.getContext('2d'),dp=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight,R=Math.random;
+ const cv=$('#lc'),cx=cv.getContext('2d'),dp=Math.min(devicePixelRatio||1,1.5),W=innerWidth,H=innerHeight,R=Math.random;
  cv.width=W*dp;cv.height=H*dp;cx.scale(dp,dp);
  const fs=Math.min(W*.34,H*.2),cy=H*.47,F=`900 ${fs}px "Arial Black",Impact,system-ui,sans-serif`;
  const logo=c=>{c.font=F;c.textAlign='center';c.textBaseline='middle';c.fillText('ZBZ',W/2,cy);const w=fs*1.15,h=w*.5,x=W/2,y=cy-fs*.95;c.beginPath();c.moveTo(x-w/2,y+h);c.lineTo(x-w/2,y+h*.2);c.lineTo(x-w/4,y+h*.6);c.lineTo(x,y);c.lineTo(x+w/4,y+h*.6);c.lineTo(x+w/2,y+h*.2);c.lineTo(x+w/2,y+h);c.closePath();c.fill()};
  const o=document.createElement('canvas');o.width=W;o.height=H;const oc=o.getContext('2d');oc.fillStyle='#fff';logo(oc);
  const d=oc.getImageData(0,0,W,H).data;
  const grab=st=>{const a=[];for(let y=0;y<H;y+=st)for(let x=0;x<W;x+=st)if(d[((y|0)*W+(x|0))*4+3]>128)a.push([x,y]);return a};
- let pts=grab(2);if(pts.length>3800)pts=grab(2*Math.sqrt(pts.length/3800));
+ let pts=grab(2);if(pts.length>1800)pts=grab(2*Math.sqrt(pts.length/1800));
  const G=[[],[],[]];pts.forEach(([x,y],i)=>G[i%3].push({tx:x,ty:y,sx:R()*W,sy:R()*H,dl:R()*.9,du:1.8+R()*1.3,s:1+R()*1.5,wb:Math.sin(i)*60}));
  const FC=[[127,215,255],[192,139,255],[255,210,74]],GD=[255,210,74],t0=performance.now(),ez=e=>e<.5?4*e*e*e:1-Math.pow(-2*e+2,3)/2;
  const gr=cx.createLinearGradient(0,cy-fs,0,cy+fs/2);gr.addColorStop(0,'#fff3b0');gr.addColorStop(1,'#ffb400');
- (function fr(now){const t=(now-t0)/1000,g=Math.min(Math.max((t-3.4)/.8,0),1);cx.clearRect(0,0,W,H);
+ (function fr(now){if(end.d)return;const t=(now-t0)/1000*1.3,g=Math.min(Math.max((t-3.4)/.8,0),1);cx.clearRect(0,0,W,H);
   G.forEach((a,k)=>{cx.fillStyle='rgb('+FC[k].map((v,j)=>v+(GD[j]-v)*g|0)+')';for(const p of a){const e=ez(Math.min(Math.max((t-p.dl)/p.du,0),1)),w=(1-e)*e*p.wb;cx.fillRect(p.tx+(p.sx-p.tx)*(1-e)+w,p.ty+(p.sy-p.ty)*(1-e)-w,p.s,p.s)}});
   if(g){cx.save();cx.globalAlpha=g*(.8+.2*Math.sin(t*9));cx.shadowColor='#ffb400';cx.shadowBlur=34*g;cx.fillStyle=gr;logo(cx);cx.restore()}
   if(t<4.6)requestAnimationFrame(fr);else end()})(t0);
@@ -574,12 +583,16 @@ const TU=[
 ['nav [data-k=profile]','user',`Profile|Profil|Profil|Профиль|我的|الملف`,`Change the language and see your stats here. You can replay this tutorial from here too. If the admin opens a message section for you, write to the bot: your name, ID and text reach the admin. The admin can limit the length of a message and the total characters; when the limit ends, the bot stops accepting messages.|Burada dili dəyiş və statistikanı gör. Bu təlimatı buradan təkrar aça bilərsən. Admin sənin üçün mesaj bölməsini açsa, bota yaz: adın, ID-n və mətnin adminə çatır. Admin bir mesajın uzunluğuna və ümumi hərf sayına limit qoya bilər; limit bitəndə bot mesajı qəbul etmir.|Burada dili değiştir ve istatistiklerini gör. Bu eğitimi buradan tekrar açabilirsin. Admin senin için mesaj bölümünü açarsa, bota yaz: adın, ID'n ve metnin admine ulaşır. Admin bir mesajın uzunluğuna ve toplam harf sayısına limit koyabilir; limit bitince bot mesajı kabul etmez.|Здесь можно сменить язык и посмотреть статистику. Обучение можно запустить заново. Если админ откроет для тебя раздел сообщений, пиши боту: имя, ID и текст дойдут до админа. Админ может ограничить длину сообщения и общее число символов; когда лимит закончится, бот перестанет принимать сообщения.|在这里更换语言、查看数据，也可以重新观看教程。如果管理员为你开启了消息功能，请给机器人发消息：你的姓名、ID和内容会发给管理员。管理员可限制单条消息长度和总字数，额度用完后机器人不再接收消息。|غيّر اللغة وشاهد إحصائياتك هنا. ويمكنك إعادة هذا الشرح من هنا. إذا فتح المشرف قسم الرسائل لك فاكتب للبوت: يصل اسمك ومعرّفك ونصك إلى المشرف. يمكن للمشرف تحديد طول الرسالة وإجمالي الأحرف؛ وعند انتهاء الحد يتوقف البوت عن قبول الرسائل.`],
 ['#hq','help',`Help|Kömək|Yardım|Помощь|帮助|مساعدة`,`Tap this blue button anytime to open the full guide.|İstənilən vaxt bu mavi düyməyə bas, bütün izahat burada.|İstediğin zaman bu mavi düğmeye bas, tüm açıklamalar burada.|Нажми на эту синюю кнопку в любой момент, чтобы открыть полное руководство.|随时点击这个蓝色按钮即可查看完整说明。|اضغط هذا الزر الأزرق في أي وقت لفتح الدليل الكامل.`]];
 const TB={skip:`Skip|Keç|Geç|Пропустить|跳过|تخطَّ`,next:`Next|Növbəti|İleri|Далее|下一步|التالي`,go:`Start|Başla|Başla|Начать|开始|ابدأ`,guide:`Guide|Bələdçi|Rehber|Руководство|指南|الدليل`,again:`Replay tutorial|Təlimatı təkrar göstər|Eğitimi tekrar göster|Показать обучение снова|重新观看教程|إعادة الشرح`},tb=k=>TB[k].split('|')[S.lang],tx=(s,k)=>s[k].split('|')[S.lang];
-function tut(i){let o=$('#tu');if(!o){o=document.createElement('div');o.id='tu';document.body.appendChild(o)}
+function tut(i){try{tut0(i)}catch(e){tutEnd()}}
+function tut0(i){let o=$('#tu');if(!o){o=document.createElement('div');o.id='tu';document.body.appendChild(o)}
+ const n=tut.n=(tut.n||0)+1;
  if(i<0){o.className='';o.style.display='flex';o.innerHTML=`<div class="c tc"><h2>🌐 Language · Dil · Язык</h2><div class="gr" style="margin-top:12px">${LN.map((n,k)=>`<button class="ch${k==S.lang?' on':''}" data-a="tl" data-i="${k}">${n}</button>`).join('')}</div></div>`;return}
  o.className='st';o.style.display='block';const s=TU[i];if(tab!='home'){tab='home';render()}
  const el=document.querySelector(s[0]);if(!el)return tutEnd();el.scrollIntoView({block:'center'});
- setTimeout(()=>{const r=el.getBoundingClientRect(),vh=innerHeight,up=r.top>vh*.4,L=TU.length,cx=r.left+r.width/2;
- o.innerHTML=`<div class="sp" style="left:${r.left-6}px;top:${r.top-6}px;width:${r.width+12}px;height:${r.height+12}px"></div><div class="fg" style="left:${cx-24}px;top:${up?r.top-62:r.bottom+6}px">${up?'👇':'👆'}</div><div class="c tc tt" style="${up?'bottom:'+(vh-r.top+64)+'px':'top:'+(r.bottom+64)+'px'}"><div class="tr">${ic(s[1],44)}<h2>${tx(s,2)}</h2></div><p>${tx(s,3)}</p><div class="dts">${TU.map((_,k)=>`<i class="${k==i?'on':''}"></i>`).join('')}</div><div class="gr"><button class="ch" data-a="ts">${tb('skip')}</button><button class="btn g1 sm" data-a="tn" data-i="${i}">${i==L-1?tb('go'):tb('next')}</button></div></div>`},60)}
+ setTimeout(()=>{try{if(n!==tut.n)return;const vh=innerHeight;
+  if(!el.closest('nav')){const q=el.getBoundingClientRect();window.scrollBy({top:q.top+q.height/2-vh*.3,behavior:'instant'})}
+  setTimeout(()=>{try{if(n!==tut.n)return;const r=el.getBoundingClientRect(),up=r.top+r.height/2>vh*.5,L=TU.length,cx=r.left+r.width/2;
+   o.innerHTML=`<div class="sp" style="left:${r.left-6}px;top:${r.top-6}px;width:${r.width+12}px;height:${r.height+12}px"></div><div class="fg" style="left:${cx-24}px;top:${up?r.top-62:r.bottom+6}px">${up?'👇':'👆'}</div><div class="c tc tt ${up?'tp':'bt'}"><div class="tsc"><div class="tr">${ic(s[1],44)}<h2>${tx(s,2)}</h2></div><p>${tx(s,3)}</p></div><div class="dts">${TU.map((_,k)=>`<i class="${k==i?'on':''}"></i>`).join('')}</div><div class="gr"><button class="ch" data-a="ts">${tb('skip')}</button><button class="btn g1 sm" data-a="tn" data-i="${i}">${i==L-1?tb('go'):tb('next')}</button></div></div>`}catch(e){tutEnd()}},80)}catch(e){tutEnd()}},60)}
 function tutEnd(){S.tut=1;sv();const o=$('#tu');if(o){o.style.display='none';o.innerHTML=''}}
 function help(){let o=$('#hl');if(!o){o=document.createElement('div');o.id='hl';document.body.appendChild(o)}o.style.display='block';
  o.innerHTML=`<div class="hh"><b>${tb('guide')}</b><button class="ib" data-a="hx"><img src="${IC.x}" alt=""></button></div>`+TU.map(s=>`<div class="c hi"><div class="hic">${ic(s[1],56)}</div><div><b>${tx(s,2)}</b><p>${tx(s,3)}</p></div></div>`).join('')+`<button class="btn g1 sm" data-a="tut2">${tb('again')}</button>`}
@@ -610,6 +623,5 @@ function sfx(k){
 const snIc=()=>{const e=$('#sq');if(e)e.textContent=S.snd===0?'🔇':'🔊'};snIc();
 ['gesturestart','gesturechange','gestureend','dragstart'].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault()));
 document.addEventListener('contextmenu',e=>{if(!e.target.closest('input,textarea,.pyx'))e.preventDefault()});
-document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
 loader();
 </script></body></html>
